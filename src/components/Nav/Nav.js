@@ -15,6 +15,9 @@ function Nav() {
           <li>
             <Link to="/portfolio">Portfolio</Link>
           </li>
+          <li>
+            <Link to="/portfolio/add">Add To Portfolio</Link>
+          </li>
         </ul>
       </nav>
     </div>

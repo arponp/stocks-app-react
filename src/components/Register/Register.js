@@ -32,7 +32,7 @@ function Register() {
   };
   return (
     <>
-      {user && <Redirect to="/" />}
+      {user && <Redirect to="/portfolio" />}
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>{error}</div>

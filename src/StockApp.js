@@ -5,6 +5,7 @@ import Nav from "./components/Nav/Nav";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Portfolio from "./components/Portfolio/Portfolio";
+import Add from "./components/Add/Add";
 import UserContext from "./user/UserContext";
 
 function StockApp() {
@@ -19,7 +20,8 @@ function StockApp() {
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/portfolio" component={Portfolio} />
+          <Route path="/portfolio" exact component={Portfolio} />
+          <Route path="/portfolio/add" component={Add} />
         </Switch>
       </UserContext.Provider>
     </Router>

@@ -6,31 +6,31 @@ import axios from "axios";
 function Portfolio() {
   const { user } = useContext(UserContext);
   const [portfolio, setPortfolio] = useState([]);
-  const fetchData = async () => {
-    try {
+
+  useEffect(() => {
+    const fetchData = async () => {
       const { data } = await axios.get("http://localhost:4000/portfolio", {
         headers: { authorization: `Bearer ${user.token}` },
       });
-      setPortfolio(data.stocks);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
+      if (data.stocks) {
+        setPortfolio(data.stocks);
+      }
+    };
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div>
       {!user && <Redirect to="/login" />}
       <h1>Your Portfolio</h1>
-      <ul>
+      <div>
         {portfolio.map((stock, index) => (
-          <li key={index}>
+          <div key={index}>
             Symbol: {stock.symbol}, Quantity: {stock.quantity}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

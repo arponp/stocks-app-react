@@ -29,7 +29,7 @@ function Login() {
   };
   return (
     <>
-      {user && <Redirect to="/" />}
+      {user && <Redirect to="/portfolio" />}
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>{error}</div>
