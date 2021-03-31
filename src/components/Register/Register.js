@@ -9,13 +9,14 @@ function Register() {
   const [error, setError] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if ((name, email, password)) {
+    if (name && email && password) {
       const { data } = await axios.post("http://localhost:4000/users", {
         name,
         email,
         password,
       });
       if (data.token) {
+        console.log(data.token);
         setToken(data.token);
       } else {
         setError("Registration error");
