@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../../user/UserContext";
 
 function Login() {
-  const [token, setToken] = useState("");
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,7 +17,11 @@ function Login() {
       });
       if (data.token) {
         console.log(data.token);
-        setToken(data.token);
+        setUser({
+          name: data.name,
+          email: data.email,
+          token: data.token,
+        });
       }
     } else {
       setError("Fill out all fields");
@@ -23,20 +29,21 @@ function Login() {
   };
   return (
     <>
+      {user && <Redirect to="/" />}
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>{error}</div>
-        <label>Email:</label>
         <input
           type="text"
           name="email"
+          placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <div></div>
-        <label>Password:</label>
         <input
           type="password"
           name="password"
+          placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
         <div></div>
