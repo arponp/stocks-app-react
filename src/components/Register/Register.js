@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
+import UserContext from "../../user/UserContext";
+import { Redirect } from "react-router";
 
 function Register() {
-  const [token, setToken] = useState("");
+  const { user, setUser } = useContext(UserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,8 +18,11 @@ function Register() {
         password,
       });
       if (data.token) {
-        console.log(data.token);
-        setToken(data.token);
+        setUser({
+          name: data.name,
+          email: data.email,
+          token: data.token,
+        });
       } else {
         setError("Registration error");
       }
@@ -27,6 +32,7 @@ function Register() {
   };
   return (
     <>
+      {user && <Redirect to="/" />}
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>{error}</div>
