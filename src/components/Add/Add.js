@@ -14,7 +14,6 @@ function Add() {
     if (symbol) {
       const request = await axios.get(`http://localhost:4000/stock/${symbol}`);
       setStock(request.data);
-      console.log(stock);
     } else {
       setError("Enter a valid symbol");
     }
@@ -31,7 +30,7 @@ function Add() {
             placeholder="Search Stock Symbol"
             onChange={(e) => setSymbol(e.target.value)}
           />
-          <div></div>
+          &nbsp;
           <input type="submit" />
         </form>
       </div>
