@@ -12,8 +12,13 @@ function Portfolio() {
         const { data } = await axios.get("http://localhost:4000/portfolio", {
           headers: { authorization: `Bearer ${user.token}` },
         });
-        setPortfolio(data.stocks);
-        console.log(portfolio);
+        setPortfolio([]);
+        for (const stock of data.stocks) {
+          setPortfolio([
+            ...portfolio,
+            { symbol: stock.symbol, quantity: stock.quantity },
+          ]);
+        }
       } catch (e) {
         console.log(e);
       }
