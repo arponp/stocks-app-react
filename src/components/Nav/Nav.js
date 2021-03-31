@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 function Nav() {
   return (
     <div>
-      <h1>Stocks</h1>
       <nav>
         <ul>
           <li>
