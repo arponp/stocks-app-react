@@ -1,35 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router';
-import UserContext from '../../user/UserContext';
 import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import UserContext from '../../user/UserContext';
 
 function Portfolio() {
     const { user } = useContext(UserContext);
-    const [portfolio, setPortfolio] = useState([]);
-    console.log(user);
+    const [stocks, setStocks] = useState([]);
+    async function loadStocks() {
+        const { data } = await axios.get('http://localhost:4000/portfolio', {
+            headers: {
+                authorization: `Bearer ${user.token}`,
+            },
+        });
+        setStocks(data.stocks);
+    }
     useEffect(() => {
-        if (user) {
-            const fetchData = async () => {
-                const { data } = await axios.get(
-                    'http://localhost:4000/portfolio',
-                    {
-                        headers: { authorization: `Bearer ${user.token}` },
-                    }
-                );
-                if (data.stocks) {
-                    console.log(portfolio);
-                    setPortfolio(data.stocks);
-                }
-            };
-            fetchData();
-        }
-        // eslint-disable-next-line
+        loadStocks();
     }, []);
-
     return (
         <div>
-            {!user && <Redirect to="/login" />}
             <h1>Your Portfolio</h1>
+            {stocks.length > 0 &&
+                stocks.map((stock, i) => <div key={i}>{stock.symbol}</div>)}
         </div>
     );
 }

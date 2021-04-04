@@ -21,9 +21,11 @@ function AddStock(stock) {
         try {
             if (quantity < 1) {
                 setError('Invalid quantity inputted');
+                return;
             }
             if (!user.token) {
                 setError('User error');
+                return;
             }
             const { status, data } = await axios.post(
                 'http://localhost:4000/portfolio',

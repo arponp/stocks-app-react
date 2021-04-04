@@ -15,15 +15,15 @@ function StockApp() {
             <div>
                 <Nav />
             </div>
-            <UserContext.Provider value={{ user, setUser }}>
-                <Switch>
+            <Switch>
+                <UserContext.Provider value={{ user, setUser }}>
                     <Route path="/" exact component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/portfolio" exact component={Portfolio} />
                     <Route path="/portfolio/add" component={Add} />
-                </Switch>
-            </UserContext.Provider>
+                </UserContext.Provider>
+            </Switch>
         </Router>
     );
 }

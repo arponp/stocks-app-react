@@ -26,7 +26,7 @@ function Add() {
     }
     return (
         <div>
-            {!user && <Redirect to="/" />}
+            {!user && <Redirect to="/login" />}
             <h1>Add Stock to Portfolio</h1>
             <form onSubmit={handleSubmit}>
                 <label>Search</label>
