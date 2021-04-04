@@ -19,10 +19,8 @@ function Login() {
                 }
             );
             if (data.token) {
-                console.log(data.token);
+                console.log(data);
                 setUser({
-                    name: data.name,
-                    email: data.email,
                     token: data.token,
                 });
             }

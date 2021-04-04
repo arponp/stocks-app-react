@@ -12,11 +12,13 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (name && email && password) {
+            console.log(name, email, password);
             const { data } = await axios.post('http://localhost:4000/users', {
-                name,
-                email,
-                password,
+                name: name,
+                email: email,
+                password: password,
             });
+            console.log(data);
             if (data.token) {
                 setUser({
                     name: data.name,

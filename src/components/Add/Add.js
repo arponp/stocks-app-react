@@ -1,41 +1,45 @@
-import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import UserContext from '../../user/UserContext';
-import axios from 'axios';
 import AddStock from './AddStock';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router';
+import UserContext from '../../user/UserContext';
 
 function Add() {
     const { user } = useContext(UserContext);
-    const [stock, setStock] = useState(null);
     const [symbol, setSymbol] = useState('');
     const [error, setError] = useState('');
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (symbol) {
-            const request = await axios.get(
-                `http://localhost:4000/stock/${symbol}`
-            );
-            setStock(request.data);
-        } else {
-            setError('Enter a valid symbol');
+    const [stock, setStock] = useState();
+    async function handleSubmit(e) {
+        try {
+            e.preventDefault();
+            if (symbol) {
+                const { status, data } = await axios.get(
+                    `http://localhost:4000/stock/${symbol}`
+                );
+                status == 200 ? setStock(data) : setStock('Invalid Symbol');
+                console.log(stock);
+            }
+        } catch (e) {
+            console.log(e.message);
+            setError('Invalid symbol');
         }
-    };
+    }
     return (
         <div>
-            {!user && <Redirect to="/login" />}
-            <h1>Add Stock To Portfolio</h1>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div>{error}</div>
-                    <input
-                        type="text"
-                        placeholder="Search Stock Symbol"
-                        onChange={(e) => setSymbol(e.target.value)}
-                    />
-                    &nbsp;
-                    <input type="submit" />
-                </form>
-            </div>
+            {!user && <Redirect to="/" />}
+            <h1>Add Stock to Portfolio</h1>
+            <form onSubmit={handleSubmit}>
+                <label>Search</label>
+                <div>{error}</div>
+                <input
+                    type="text"
+                    placeholder="Insert symbol"
+                    onChange={(e) => setSymbol(e.target.value)}
+                />
+                <div />
+                <button type="submit">Search</button>
+            </form>
+            <p />
             {stock && <AddStock stock={stock} />}
         </div>
     );
