@@ -19,7 +19,7 @@ const Nav = () => {
                         <Link to="/portfolio/add">Add To Portfolio</Link>
                     </li>
                     <li>
-                        <Link to="/stocks/search">Search Stocks</Link>
+                        <Link to="/search">Search Stocks</Link>
                     </li>
                 </ul>
             </nav>

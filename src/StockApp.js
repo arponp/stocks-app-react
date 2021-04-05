@@ -8,6 +8,7 @@ import Portfolio from './components/Portfolio/Portfolio';
 import Add from './components/Add/Add';
 import UserContext from './user/UserContext';
 import StockSearch from './components/StockSearch/StockSearch';
+import StockPage from './components/StockPage/StockPage';
 
 const StockApp = () => {
     const [user, setUser] = useState(null);
@@ -23,7 +24,8 @@ const StockApp = () => {
                     <Route path="/register" component={Register} />
                     <Route path="/portfolio" exact component={Portfolio} />
                     <Route path="/portfolio/add" component={Add} />
-                    <Route path="/stocks/search" component={StockSearch} />
+                    <Route path="/search" component={StockSearch} />
+                    <Route path="/stock/:symbol" component={StockPage} />
                 </UserContext.Provider>
             </Switch>
         </Router>
