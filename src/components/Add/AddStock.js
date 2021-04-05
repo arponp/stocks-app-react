@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import UserContext from '../../user/UserContext';
 
-function AddStock(stock) {
+const AddStock = (stock) => {
     const { user } = useContext(UserContext);
     const [quantity, setQuantity] = useState(1);
     const [error, setError] = useState('');
@@ -17,7 +17,7 @@ function AddStock(stock) {
     stock.stock.last == null
         ? (last = stock.stock.close)
         : (last = stock.stock.last);
-    async function addStock() {
+    const addStock = async () => {
         try {
             if (quantity < 1) {
                 setError('Invalid quantity inputted');
@@ -53,7 +53,7 @@ function AddStock(stock) {
             setError('Unable to add');
             console.log(e);
         }
-    }
+    };
     return (
         <div>
             {success && <Redirect to="/portfolio" />}
@@ -86,7 +86,7 @@ function AddStock(stock) {
             <button onClick={addStock}>Add</button>
         </div>
     );
-}
+};
 
 AddStock.propTypes = {
     stock: PropTypes.object,

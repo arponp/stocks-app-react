@@ -1,68 +1,87 @@
-import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import UserContext from '../../user/UserContext';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
+import UserContext from '../../user/UserContext';
 
-function Register() {
+const Register = () => {
     const { user, setUser } = useContext(UserContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [duplicatePassword, setDuplicatePassword] = useState('');
     const [error, setError] = useState('');
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (name && email && password) {
-            console.log(name, email, password);
-            const { data } = await axios.post('http://localhost:4000/users', {
-                name: name,
-                email: email,
-                password: password,
-            });
-            console.log(data);
-            if (data.token) {
-                setUser({
-                    name: data.name,
-                    email: data.email,
-                    token: data.token,
-                });
+        try {
+            e.preventDefault();
+            if (name && email && password && duplicatePassword) {
+                if (password == duplicatePassword) {
+                    setError('');
+                    const { data, status } = await axios.post(
+                        'http://localhost:4000/users',
+                        {
+                            name,
+                            email,
+                            password,
+                        }
+                    );
+                    if (status != 201) {
+                        setError('Registration error');
+                        return;
+                    }
+                    setUser({
+                        name: data.user.name,
+                        email: data.user.email,
+                        token: data.token,
+                    });
+                } else {
+                    setError('Make sure both passwords match');
+                    return;
+                }
             } else {
-                setError('Registration error');
+                setError('Please fill out all values');
+                return;
             }
-        } else {
-            setError('Make sure all fields are filled out');
+        } catch (e) {
+            console.log(e.message);
         }
     };
     return (
-        <>
+        <div>
             {user && <Redirect to="/portfolio" />}
-            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
-                <div>{error}</div>
-                <label>Name:</label>
+                <h1>Register</h1>
                 <input
-                    type="text"
                     name="name"
-                    onChange={(e) => setName(e.target.name)}
-                />
-                <div></div>
-                <label>Email:</label>
-                <input
                     type="text"
+                    placeholder="Name"
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <div />
+                <input
                     name="email"
+                    type="text"
+                    placeholder="Email address"
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <div></div>
-                <label>Password:</label>
+                <div />
                 <input
-                    type="password"
                     name="password"
+                    type="password"
+                    placeholder="Password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <div></div>
-                <input type="submit" />
+                <div />
+                <input
+                    name="duplicate-password"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={(e) => setDuplicatePassword(e.target.value)}
+                />
+                <div>{error}</div>
+                <button type="submit">Submit</button>
             </form>
-        </>
+        </div>
     );
-}
+};
 
 export default Register;

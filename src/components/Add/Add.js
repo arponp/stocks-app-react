@@ -4,12 +4,12 @@ import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router';
 import UserContext from '../../user/UserContext';
 
-function Add() {
+const Add = () => {
     const { user } = useContext(UserContext);
     const [symbol, setSymbol] = useState('');
     const [error, setError] = useState('');
     const [stock, setStock] = useState();
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         try {
             e.preventDefault();
             if (symbol) {
@@ -23,7 +23,7 @@ function Add() {
             console.log(e.message);
             setError('Invalid symbol');
         }
-    }
+    };
     return (
         <div>
             {!user && <Redirect to="/login" />}
@@ -43,6 +43,6 @@ function Add() {
             {stock && <AddStock stock={stock} />}
         </div>
     );
-}
+};
 
 export default Add;

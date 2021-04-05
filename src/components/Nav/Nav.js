@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Nav() {
+const Nav = () => {
     return (
         <div>
             <nav>
@@ -18,10 +18,13 @@ function Nav() {
                     <li>
                         <Link to="/portfolio/add">Add To Portfolio</Link>
                     </li>
+                    <li>
+                        <Link to="/stocks/search">Search Stocks</Link>
+                    </li>
                 </ul>
             </nav>
         </div>
     );
-}
+};
 
 export default Nav;

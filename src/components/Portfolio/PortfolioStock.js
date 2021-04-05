@@ -1,11 +1,24 @@
 import React from 'react';
+import { object } from 'prop-types';
 
-function PortfolioStock() {
+const PortfolioStock = ({ stock }) => {
+    const { symbol, quantity } = stock;
+    const editStock = () => {
+        console.log('editing');
+    };
     return (
-        <div>
-            <h3>Stock</h3>
-        </div>
+        <tr>
+            <td>{symbol}</td>
+            <td>{quantity}</td>
+            <td>
+                <button onClick={editStock}>Edit</button>
+            </td>
+        </tr>
     );
-}
+};
+
+PortfolioStock.propTypes = {
+    stock: object,
+};
 
 export default PortfolioStock;

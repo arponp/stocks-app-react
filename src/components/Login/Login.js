@@ -3,29 +3,36 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../user/UserContext';
 
-function Login() {
+const Login = () => {
     const { user, setUser } = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (email && password) {
-            const { data } = await axios.post(
-                'http://localhost:4000/users/login',
-                {
-                    email,
-                    password,
+        try {
+            e.preventDefault();
+            if (email && password) {
+                const { data } = await axios.post(
+                    'http://localhost:4000/users/login',
+                    {
+                        email,
+                        password,
+                    }
+                );
+                if (data.token) {
+                    console.log(data);
+                    setUser({
+                        name: data.user.name,
+                        email: data.user.email,
+                        token: data.token,
+                    });
                 }
-            );
-            if (data.token) {
-                console.log(data);
-                setUser({
-                    token: data.token,
-                });
+            } else {
+                setError('Fill out all fields');
             }
-        } else {
-            setError('Fill out all fields');
+        } catch (e) {
+            console.log(e.message);
+            setError('Login error');
         }
     };
     return (
@@ -52,6 +59,6 @@ function Login() {
             </form>
         </>
     );
-}
+};
 
 export default Login;
