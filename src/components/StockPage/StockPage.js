@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
 import InfoStock from './InfoStock';
 
-function StockPage(props) {
+const StockPage = (props) => {
     const [stock, setStock] = useState(null);
     const [loading, setLoading] = useState(true);
     const fetchStock = async () => {
@@ -31,7 +31,7 @@ function StockPage(props) {
             )}
         </div>
     );
-}
+};
 
 StockPage.propTypes = {
     match: object,
